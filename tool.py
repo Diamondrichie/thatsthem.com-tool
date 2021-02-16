@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 
 def get_text(element):
 	if element:
-		return (text := element[-1].text) if text else '-'
+		return element[-1].text if element[-1].text else '-'
 	else:
 		return '-'
 
@@ -44,16 +44,17 @@ def make_request(name):
 		return response
 	else:
 		print(res.reason)
+
 		
 fields = ['Phone Number', 'Alternate Phones', 'Email Address', 'Length of Residence', 
 'Household Size', 'IP Address', 'Estimated Net Worth', 'Estimated Income', 'Education',
 'Occupation', 'Language', 'Wealth Score', 'Green Score', 'Donor Score', 'Travel Score',
 'Tech Score', 'Shopping Score', 'Name', 'Address', 'Age']
 
-r = make_request('jean doe')
 with open('thatsthem.csv', 'w') as fp:
 	headings = ','.join(fields)
-	fp.write(headings)
+	fp.write(headings + '\n')
 
+	r = make_request('jean doe')
 	values = ','.join([ r.get(field) for field in fields])
-	fp.write(values)
+	fp.write(values + '\n')
